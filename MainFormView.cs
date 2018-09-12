@@ -5,8 +5,6 @@
 
     public class MainFormView: Form
     {
-        public static readonly string[] ListBoxItems = { "Single", "Married" };
-
         public MainFormView()
         {
             this.Build();
@@ -52,10 +50,6 @@
             for(int i = 0; i < columns.Length; ++i) {
                 columns[ i ].HeaderText = columnHeaders[ i ];
             }
-
-            // Combobox column
-            var cbColumn = (DataGridViewComboBoxColumn) columns[ 1 ];
-            cbColumn.DataSource = ListBoxItems;
 
             return toret;
         }

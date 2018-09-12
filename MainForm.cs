@@ -2,8 +2,9 @@
 {
     using System.Windows.Forms;
 
-    public class MainForm
-    {
+    public class MainForm {
+        public static readonly string[] ListBoxItems = { "Single", "Married" };
+
         public MainForm()
         {
             this.Form = new MainFormView();
@@ -16,9 +17,14 @@
         void OnEditingControlShowing(DataGridViewEditingControlShowingEventArgs e)
         {
             if ( e.Control is ComboBox comboEdited ) {
+                // Can also be set in the column, globally for all combo boxes
+                comboEdited.DataSource = ListBoxItems;
+                comboEdited.AutoCompleteMode = AutoCompleteMode.Append;
+                comboEdited.AutoCompleteSource = AutoCompleteSource.ListItems;
+
+                // Attach event handler
                 comboEdited.SelectedIndexChanged +=
                     (sender, evt) => this.OnComboSelectedIndexChanged( sender );
-                System.Console.WriteLine( "Attached event handler" );
             }
 
             return;
@@ -26,10 +32,15 @@
 
         void OnComboSelectedIndexChanged(object sender)
         {
-            int selectedIndex = ((ComboBox) sender).SelectedIndex;
+            string selectedValue;
+            ComboBox comboBox = (ComboBox) sender;
+            int selectedIndex = comboBox.SelectedIndex;
 
-            selectedIndex = System.Math.Max( 0, selectedIndex );
-            string selectedValue = MainFormView.ListBoxItems[ selectedIndex ];
+            if ( selectedIndex >= 0 ) {
+                selectedValue = ListBoxItems[ selectedIndex ];
+            } else {
+                selectedValue = comboBox.Text;
+            }
 
             this.Form.EdSelected.Text = selectedValue;
         }
