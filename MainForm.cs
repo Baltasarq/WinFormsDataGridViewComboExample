@@ -23,14 +23,14 @@
                 comboEdited.AutoCompleteSource = AutoCompleteSource.ListItems;
 
                 // Attach event handler
-                comboEdited.SelectedIndexChanged +=
-                    (sender, evt) => this.OnComboSelectedIndexChanged( sender );
+                comboEdited.SelectedValueChanged +=
+                    (sender, evt) => this.OnComboSelectedValueChanged( sender );
             }
 
             return;
         }
 
-        void OnComboSelectedIndexChanged(object sender)
+        void OnComboSelectedValueChanged(object sender)
         {
             string selectedValue;
             ComboBox comboBox = (ComboBox) sender;
